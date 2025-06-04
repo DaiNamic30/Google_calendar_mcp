@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  google-calendar-mcp:
+    build: .
+    container_name: google-calendar-mcp
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./client_secret.json:/app/client_secret.json
+      - ./token.json:/app/token.json
+    environment:
+      - TZ=Asia/Tokyo
+    restart: unless-stopped

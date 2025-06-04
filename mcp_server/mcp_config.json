@@ -1,0 +1,97 @@
+{
+  "name": "google-calendar-mcp",
+  "display_name": "Google Calendar MCP Server",
+  "description": "GoogleカレンダーAPIを使用してイベントの取得・登録を行うMCPサーバー",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "get_events",
+      "display_name": "カレンダーイベント取得",
+      "description": "GoogleカレンダーAPIを使用してイベントを取得します",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "calendar_id": {
+            "type": "string",
+            "description": "カレンダーID（デフォルトは'primary'）"
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "取得する最大イベント数",
+            "default": 10
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "イベント取得の開始日時（ISO形式）"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "イベント取得の終了日時（ISO形式）"
+          },
+          "query": {
+            "type": "string",
+            "description": "検索クエリ"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "取得したイベントのリスト"
+          }
+        }
+      },
+      "endpoint": "/tools/get_events"
+    },
+    {
+      "name": "create_event",
+      "display_name": "カレンダーイベント作成",
+      "description": "GoogleカレンダーAPIを使用して新しいイベントを作成します",
+      "input_schema": {
+        "type": "object",
+        "required": ["summary", "start_time", "end_time"],
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "イベントのタイトル"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "開始時間（ISO形式）"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "終了時間（ISO形式）"
+          },
+          "description": {
+            "type": "string",
+            "description": "イベントの説明"
+          },
+          "location": {
+            "type": "string",
+            "description": "イベントの場所"
+          },
+          "calendar_id": {
+            "type": "string",
+            "description": "カレンダーID（デフォルトは'primary'）"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "description": "作成されたイベントの情報"
+      },
+      "endpoint": "/tools/create_event"
+    }
+  ],
+  "resources": []
+}
