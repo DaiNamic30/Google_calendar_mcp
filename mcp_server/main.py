@@ -3,6 +3,7 @@ import json
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from .google_calendar import get_events, create_event
 
@@ -11,6 +12,15 @@ app = FastAPI(
     title="Google Calendar MCP Server",
     description="Model Context Protocol (MCP) server for Google Calendar API",
     version="1.0.0"
+)
+
+# CORSミドルウェアを追加
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # すべてのオリジンを許可
+    allow_credentials=True,
+    allow_methods=["*"],  # すべてのメソッドを許可
+    allow_headers=["*"],  # すべてのヘッダーを許可
 )
 
 # MCPサーバーの設定ファイルのパス
